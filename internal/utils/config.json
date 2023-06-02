@@ -1,0 +1,5 @@
+{
+    "db": {
+        "url_db":"postgres://postgres:admin@localhost:5432/go-kafka-db"
+    }
+}
