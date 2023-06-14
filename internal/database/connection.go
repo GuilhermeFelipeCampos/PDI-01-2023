@@ -15,11 +15,7 @@ type DbConnection interface {
 	Close()
 }
 
-type DbPool struct {
-	conn *pgxpool.Pool
-}
-
-func GetConnection(ctx context.Context) *DbPool {
+func GetConnection(ctx context.Context) *pgxpool.Pool {
 	config, err := utils.LoadConfig()
 	if err != nil {
 		fmt.Println(err)
@@ -31,17 +27,7 @@ func GetConnection(ctx context.Context) *DbPool {
 
 			return nil
 		}
-		return &DbPool{
-			conn: pool,
-		}
+		return pool
 	}
 	return nil
-}
-
-func (pg *DbPool) Query(ctx context.Context, sql string, args ...interface{}) (pgx.Rows, error) {
-	return pg.conn.Query(ctx, sql, args...)
-}
-
-func (pg *DbPool) Close() {
-	pg.conn.Close()
 }
